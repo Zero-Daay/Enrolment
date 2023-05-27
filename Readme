@@ -1,0 +1,41 @@
+# Student Enrolments Report
+
+This project is a web application for managing and displaying student enrolment records in a tabular format. 
+
+## Features
+
+- Retrieves and displays user data from a MySQL database.
+- Uses DataTables to display the data in a dynamic table format.
+- Handles errors gracefully and displays them in a user-friendly format.
+
+## Prerequisites
+
+- PHP 7.4 or newer
+- MySQL 8.0 or newer
+- A web server such as Apache or Nginx
+- jQuery and DataTables
+
+## Installation
+
+1. Clone the repository to your local machine or web server.
+2. Import the `Enrolments.SQL` file to your MySQL server. This file contains the necessary SQL commands to set up your database and tables. It can be imported using a tool like phpMyAdmin or via the command line.
+3. Configure the `config.php` file to match your MySQL database settings.
+4. Run your web server and access the project via your browser.
+     Using:  php -S localhost:8899 reports.php
+Your page should as similar as Example.pnq file.
+
+## Usage
+
+Open the web application in your browser. If there are student enrolments in the database, you will see them displayed in a table format. If there are any errors with the database connection or SQL query execution, they will be displayed on the page.
+
+## Code Overview
+
+- `index.php`: This file handles the main logic of the application. It retrieves the data from the database, handles errors, and displays the data in a DataTable.
+- `connection.php`: This file handles the connection to the MySQL database.
+- `config.php`: This file holds the configuration for the database connection.
+- `friendlyError()`: This function in `index.php` generates a user-friendly error message.
+- `Enrolments.SQL`: This file contains the SQL commands to set up the database and tables.
+- `generator.txt`:This file was used to generate the data;
+
+
+

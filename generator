@@ -1,0 +1,62 @@
+$dbh = new PDO('mysql:host=localhost;dbname=enrolment',"root", "root");
+
+// Insert test users
+$firstNames = ["John", "Jane", "David", "Sarah", "Michael", "Emily", "Daniel", "Olivia", "Matthew", "Sophia", "Andrew", "Isabella", "Joseph", "Emma", "Christopher", "Ava", "James", "Mia", "Alexander", "Charlotte", "William", "Amelia", "Ethan", "Harper", "Benjamin", "Evelyn"];
+$surnames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Taylor", "Clark", "Harris", "Lewis", "Walker", "Allen", "Young", "King", "Wright", "Scott", "Green", "Hall", "Adams", "Baker", "White", "Hill", "Turner"];
+
+for ($i = 1; $i <= 50; $i++) {
+    $firstName = $firstNames[rand(0, count($firstNames) - 1)];
+    $surname = $surnames[rand(0, count($surnames) - 1)];
+
+    $sql = "INSERT INTO Users (FirstName, Surname) VALUES (:first_name, :surname)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute([
+        'first_name' => $firstName,
+        'surname' => $surname
+    ]);
+}
+
+
+// Insert test courses
+$descriptions = [
+    "Introduction to Computer Science",
+    "Web Development Fundamentals",
+    "Data Analysis and Visualization",
+    "Machine Learning Basics",
+    "Database Management Systems",
+    "Software Engineering Principles",
+    "Artificial Intelligence Fundamentals",
+    "Mobile App Development",
+    "Cybersecurity Fundamentals",
+    "User Experience Design",
+    "Cloud Computing Essentials",
+    "Digital Marketing Strategies",
+    "Project Management Fundamentals",
+    "Network Administration Basics",
+    "Ethical Hacking and Penetration Testing",
+    "Game Development Principles",
+    "Internet of Things (IoT) Applications",
+    "Blockchain Technology Explained",
+    "Data Science and Big Data Analytics",
+    "Robotics and Automation Technologies"
+];
+
+for ($i = 0; $i < count($descriptions); $i++) {
+    $sql = "INSERT INTO Courses (description) VALUES (:description)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute([
+        'description' => $descriptions[$i]
+    ]);
+}
+
+// Insert test enrollments
+$statuses = ['not started', 'in progress', 'completed'];
+for ($i = 1; $i <= 100; $i++) {
+    $sql = "INSERT INTO Enrolments (UserID, CourseID, CompletionStatus) VALUES (:user_id, :course_id, :completion_status)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute([
+        'user_id' => rand(1, 50), // random user id between 1 and 50
+        'course_id' => rand(1, 20), // random course id between 1 and 20
+        'completion_status' => $statuses[array_rand($statuses)] // random status
+    ]);
+}
