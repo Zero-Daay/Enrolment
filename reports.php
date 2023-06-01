@@ -50,28 +50,29 @@
     <h1>Student enrolments report</h1>
 
     <?php
-    // Add connection file here
-    include("connection.php");
-    /** @var $dbh PDO */
+    // index.php
+    require_once 'Database.php';
+    $config = require 'config.php';
 
-    $query = "
-SELECT 
-    Enrolments.EnrolmentID,
-    Users.UserID, 
-    Users.FirstName, 
-    Users.Surname,
-    Courses.CourseID,
-    Courses.Description,
-    Enrolments.CompletionStatus
-FROM 
-    Enrolments
-JOIN 
-    Users ON Enrolments.UserID = Users.UserID
-JOIN 
-    Courses ON Enrolments.CourseID  = Courses.CourseID 
-";
+    $db = new Database($config);
+    $stmt = $db->query("
+    SELECT 
+        Enrolments.EnrolmentID,
+        Users.UserID, 
+        Users.FirstName, 
+        Users.Surname,
+        Courses.CourseID,
+        Courses.Description,
+        Enrolments.CompletionStatus
+    FROM 
+        Enrolments
+    JOIN 
+        Users ON Enrolments.UserID = Users.UserID
+    JOIN 
+        Courses ON Enrolments.CourseID  = Courses.CourseID 
+");
 
-    $stmt = $dbh->prepare($query);
+
     if ($stmt->execute()): ?>
         <div class="center">
             <div>
