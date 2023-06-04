@@ -27,6 +27,33 @@ class Database {
         return $stmt;
     }
 
+    public function getEnrolments() {
+        $stmt = $this->query("
+            SELECT 
+                Enrolments.EnrolmentID,
+                Users.UserID, 
+                Users.FirstName, 
+                Users.Surname,
+                Courses.CourseID,
+                Courses.Description,
+                Enrolments.CompletionStatus
+            FROM 
+                Enrolments
+            JOIN 
+                Users ON Enrolments.UserID = Users.UserID
+            JOIN 
+                Courses ON Enrolments.CourseID  = Courses.CourseID 
+        ");
+
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            throw new Exception($stmt->errorInfo()[2]);
+        }
+    }
+
+
+
     public function friendlyError(string $e, string $level = 'Error'): string {
         $date = date("Y-m-d H:i:s");
         return <<<END
