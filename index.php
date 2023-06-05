@@ -8,12 +8,14 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = isset($_GET['perPage']) ? (int)$_GET['perPage'] : 20;
 
 // sort and order parameters
-$sort = isset($_GET['sort']) ? $_GET['sort'] : 'EnrolmentID'; // default column to sort by
+$sort = $_GET['sort'] ?? 'EnrolmentID'; // default column to sort by
 $order = isset($_GET['order']) && in_array(strtolower($_GET['order']), ['asc', 'desc']) ? $_GET['order'] : 'asc'; // default order
 
-$search = isset($_GET['search']) ? $_GET['search'] : null;
+$search = $_GET['search'] ?? null;
+$total = 0;
 try {
     $enrolments = $db->getEnrolments($page, $perPage, $search, $sort, $order); // include sort and order parameters
+    $total = $db->getTotalEnrolments($search);
 } catch (Exception $e) {
     die($db->friendlyError($e->getMessage()));
 }
@@ -30,6 +32,12 @@ foreach ($enrolments as $enrolment) {
     $output .= '<td>' . htmlspecialchars($enrolment->CompletionStatus) . '</td>';
     $output .= '</tr>';
 }
+$data = [
+    'output' => $output,
+    'total' => $total
+];
 
-echo $output;
-?>
+// Send JSON response back to the client
+header('Content-Type: application/json');
+echo json_encode($data);
+

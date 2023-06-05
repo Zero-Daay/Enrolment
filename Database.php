@@ -19,14 +19,9 @@ class Database {
         }
     }
 
-    public function query(string $query) {
-        $stmt = $this->dbh->prepare($query);
-        if (!$stmt->execute()) {
-            die($this->friendlyError($stmt->errorInfo()[2]));
-        }
-        return $stmt;
-    }
-
+    /**
+     * @throws Exception
+     */
     public function getEnrolments($page, $perPage = 20, $search = null, $sort = 'EnrolmentID', $order = 'asc') {
         $offset = ($page - 1) * $perPage;
 
@@ -42,7 +37,7 @@ class Database {
         }
 
         if ($search) {
-            $search = "%{$search}%";
+            $search = "%$search%";
             $stmt = $this->dbh->prepare("
         SELECT 
             Enrolments.EnrolmentID,
@@ -65,8 +60,8 @@ class Database {
             Users.UserID LIKE :search OR
             Courses.Description LIKE :search OR               
             Courses.CourseID LIKE :search
-        ORDER BY {$sort} {$order}
-        LIMIT {$perPage} OFFSET {$offset}
+        ORDER BY $sort $order
+        LIMIT $perPage OFFSET $offset
     ");
             $stmt->bindParam(':search', $search, PDO::PARAM_STR);
         } else {
@@ -85,8 +80,8 @@ class Database {
                 Users ON Enrolments.UserID = Users.UserID
             JOIN 
                 Courses ON Enrolments.CourseID  = Courses.CourseID
-            ORDER BY {$sort} {$order}    
-            LIMIT {$perPage} OFFSET {$offset}
+            ORDER BY $sort $order    
+            LIMIT $perPage OFFSET $offset
         ");
         }
 
@@ -97,6 +92,52 @@ class Database {
         }
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getTotalEnrolments($search = null) {
+        // Whitelist possible column names to avoid SQL Injection
+
+        if ($search) {
+            $search = "%$search%";
+            $stmt = $this->dbh->prepare("
+            SELECT 
+                COUNT(*) as total
+            FROM 
+                Enrolments
+            JOIN 
+                Users ON Enrolments.UserID = Users.UserID
+            JOIN 
+                Courses ON Enrolments.CourseID  = Courses.CourseID
+            WHERE 
+                Users.FirstName LIKE :search OR
+                Users.Surname LIKE :search OR
+                Enrolments.EnrolmentID LIKE :search OR
+                Users.UserID LIKE :search OR
+                Courses.Description LIKE :search OR               
+                Courses.CourseID LIKE :search
+        ");
+            $stmt->bindParam(':search', $search, PDO::PARAM_STR);
+        } else {
+            $stmt = $this->dbh->prepare("
+            SELECT 
+                COUNT(*) as total
+            FROM 
+                Enrolments
+            JOIN 
+                Users ON Enrolments.UserID = Users.UserID
+            JOIN 
+                Courses ON Enrolments.CourseID  = Courses.CourseID
+        ");
+        }
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            return $result->total;
+        } else {
+            throw new Exception($stmt->errorInfo()[2]);
+        }
+    }
 
 
 
@@ -107,8 +148,8 @@ class Database {
         <div class="error-message center">
         <b>$level</b><br>
         Please contact system administrator.
-        <pre>Error message: <br>{$e}</pre>
-        <pre>Time: <br>{$date}</pre>
+        <pre>Error message: <br>$e</pre>
+        <pre>Time: <br>$date</pre>
         </div>
         END;
     }
