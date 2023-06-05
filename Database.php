@@ -138,8 +138,10 @@ class Database {
             throw new Exception($stmt->errorInfo()[2]);
         }
     }
-
-
+    public function insertUser($userID, $firstName, $surname) {
+        $stmt = $this->dbh->prepare("INSERT INTO Users (UserID, FirstName, Surname) VALUES (?, ?, ?)");
+        $stmt->execute([$userID, $firstName, $surname]);
+    }
 
 
     public function friendlyError(string $e, string $level = 'Error'): string {
@@ -153,4 +155,10 @@ class Database {
         </div>
         END;
     }
+
+    public function insertEnrolment($userID, $courseID, $completionStatus) {
+        $stmt = $this->dbh->prepare("INSERT INTO Enrolments (UserID, CourseID, CompletionStatus) VALUES (?, ?, ?)");
+        $stmt->execute([$userID, $courseID, $completionStatus]);
+    }
+
 }

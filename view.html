@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- include any necessary scripts, styles, meta tags -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <title>Enrolment Report</title>
+</head>
+<body>
+<!-- Enrolment Table -->
+<h1>Student Enrolments</h1>
+<div id="search-container">
+  <label for="search-field"></label><input id="search-field" type="text" placeholder="Search...">
+  <button id="search-button">Search</button>
+</div>
+<table id="enrolments-table">
+  <thead>
+  <tr>
+    <th data-sort="EnrolmentID">Enrolment ID</th>
+    <th data-sort="UserID">User ID</th>
+    <th data-sort="FirstName">First Name</th>
+    <th data-sort="Surname">Surname</th>
+    <th data-sort="CourseID">Course ID</th>
+    <th data-sort="Description">Course Description</th>
+    <th data-sort="CompletionStatus">Completion Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Data will be inserted here by jQuery -->
+  </tbody>
+</table>
+
+<!-- Pagination Buttons -->
+<div id="pagination-buttons">
+  <button id="prev-button">Previous</button>
+  <span id="page-info"></span>
+  <button id="next-button">Next</button>
+</div>
+
+<!-- Ajax Script to Load Data -->
+<script src="script.js"></script>
+
+
+</body>
