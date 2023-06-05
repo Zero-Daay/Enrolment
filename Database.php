@@ -27,23 +27,25 @@ class Database {
         return $stmt;
     }
 
-    public function getEnrolments() {
+    public function getEnrolments($page, $perPage = 20) {
+        $offset = ($page - 1) * $perPage;
         $stmt = $this->query("
-            SELECT 
-                Enrolments.EnrolmentID,
-                Users.UserID, 
-                Users.FirstName, 
-                Users.Surname,
-                Courses.CourseID,
-                Courses.Description,
-                Enrolments.CompletionStatus
-            FROM 
-                Enrolments
-            JOIN 
-                Users ON Enrolments.UserID = Users.UserID
-            JOIN 
-                Courses ON Enrolments.CourseID  = Courses.CourseID 
-        ");
+        SELECT 
+            Enrolments.EnrolmentID,
+            Users.UserID, 
+            Users.FirstName, 
+            Users.Surname,
+            Courses.CourseID,
+            Courses.Description,
+            Enrolments.CompletionStatus
+        FROM 
+            Enrolments
+        JOIN 
+            Users ON Enrolments.UserID = Users.UserID
+        JOIN 
+            Courses ON Enrolments.CourseID  = Courses.CourseID
+        LIMIT {$perPage} OFFSET {$offset}
+    ");
 
         if ($stmt->execute()) {
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -51,6 +53,7 @@ class Database {
             throw new Exception($stmt->errorInfo()[2]);
         }
     }
+
 
 
 

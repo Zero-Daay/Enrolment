@@ -1,30 +1,46 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background: #f4f4f4;
+    padding: 20px;
+    background-color: #f0f0f0;
 }
 
 h1 {
-    background: #333;
-    color: #fff;
-    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#enrolments-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#enrolments-table th,
+#enrolments-table td {
+    padding: 10px;
+    border: 1px solid #cccccc;
+}
+
+#pagination-buttons {
     text-align: center;
 }
 
-.center {
-    max-width: 960px;
-    margin: 20px auto;
+#pagination-buttons button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-.student-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
+#pagination-buttons button:last-child {
+    margin-right: 0;
 }
 
-.student-table th, .student-table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
+#pagination-buttons button:hover {
+    background-color: #45a049;
 }
