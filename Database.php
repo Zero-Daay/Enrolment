@@ -27,35 +27,47 @@ class Database {
         return $stmt;
     }
 
-    public function getEnrolments($page, $perPage = 20, $search = null) {
+    public function getEnrolments($page, $perPage = 20, $search = null, $sort = 'EnrolmentID', $order = 'asc') {
         $offset = ($page - 1) * $perPage;
+
+        // Whitelist possible column names and order directions to avoid SQL Injection
+        $allowed_columns = ['EnrolmentID', 'UserID', 'FirstName', 'Surname', 'CourseID', 'Description', 'CompletionStatus'];
+        $allowed_orders = ['asc', 'desc'];
+
+        if (!in_array($sort, $allowed_columns)) {
+            $sort = 'EnrolmentID';
+        }
+        if (!in_array(strtolower($order), $allowed_orders)) {
+            $order = 'asc';
+        }
 
         if ($search) {
             $search = "%{$search}%";
             $stmt = $this->dbh->prepare("
-            SELECT 
-                Enrolments.EnrolmentID,
-                Users.UserID, 
-                Users.FirstName, 
-                Users.Surname,
-                Courses.CourseID,
-                Courses.Description,
-                Enrolments.CompletionStatus
-            FROM 
-                Enrolments
-            JOIN 
-                Users ON Enrolments.UserID = Users.UserID
-            JOIN 
-                Courses ON Enrolments.CourseID  = Courses.CourseID
-            WHERE 
-                Users.FirstName LIKE :search OR
-                Users.Surname LIKE :search OR
-                Enrolments.EnrolmentID LIKE :search OR
-                Users.UserID LIKE :search OR
-                Courses.CourseID LIKE :search
-            LIMIT {$perPage} OFFSET {$offset}
-        ");
-
+        SELECT 
+            Enrolments.EnrolmentID,
+            Users.UserID, 
+            Users.FirstName, 
+            Users.Surname,
+            Courses.CourseID,
+            Courses.Description,
+            Enrolments.CompletionStatus
+        FROM 
+            Enrolments
+        JOIN 
+            Users ON Enrolments.UserID = Users.UserID
+        JOIN 
+            Courses ON Enrolments.CourseID  = Courses.CourseID
+        WHERE 
+            Users.FirstName LIKE :search OR
+            Users.Surname LIKE :search OR
+            Enrolments.EnrolmentID LIKE :search OR
+            Users.UserID LIKE :search OR
+            Courses.Description LIKE :search OR               
+            Courses.CourseID LIKE :search
+        ORDER BY {$sort} {$order}
+        LIMIT {$perPage} OFFSET {$offset}
+    ");
             $stmt->bindParam(':search', $search, PDO::PARAM_STR);
         } else {
             $stmt = $this->dbh->prepare("
@@ -73,6 +85,7 @@ class Database {
                 Users ON Enrolments.UserID = Users.UserID
             JOIN 
                 Courses ON Enrolments.CourseID  = Courses.CourseID
+            ORDER BY {$sort} {$order}    
             LIMIT {$perPage} OFFSET {$offset}
         ");
         }

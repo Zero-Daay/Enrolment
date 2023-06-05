@@ -16,13 +16,13 @@
 <table id="enrolments-table">
     <thead>
     <tr>
-        <th>Enrolment ID</th>
-        <th>User ID</th>
-        <th>First Name</th>
-        <th>Surname</th>
-        <th>Course ID</th>
-        <th>Course Description</th>
-        <th>Completion Status</th>
+        <th data-sort="EnrolmentID">Enrolment ID</th>
+        <th data-sort="UserID">User ID</th>
+        <th data-sort="FirstName">First Name</th>
+        <th data-sort="Surname">Surname</th>
+        <th data-sort="CourseID">Course ID</th>
+        <th data-sort="Description">Course Description</th>
+        <th data-sort="CompletionStatus">Completion Status</th>
     </tr>
     </thead>
     <tbody>
@@ -41,15 +41,18 @@
     $(document).ready(function(){
         var page = 1;
         var perPage = 20;
+        var sort = '';
+        var order = 'asc'; // default order
+        var searchTerm = ''; // declare searchTerm here
 
-        function loadEnrolments(searchTerm){
+        function loadEnrolments(){
             var data = {
                 page: page,
-                perPage: perPage
+                perPage: perPage,
+                sort: sort,
+                order: order,
+                search: searchTerm // use searchTerm here
             };
-            if(searchTerm){
-                data.search = searchTerm;
-            }
             $.ajax({
                 url: 'index.php',
                 type: 'GET',
@@ -84,12 +87,21 @@
 
         // Search button click event
         $('#search-button').on('click', function(){
-            var searchTerm = $('#search-field').val();
+            searchTerm = $('#search-field').val(); // assign searchTerm
             page = 1; // reset to first page when search is performed
-            loadEnrolments(searchTerm);
+            loadEnrolments();
+        });
+
+        // Table headers click event
+        $('#enrolments-table th').on('click', function(){
+            sort = $(this).data('sort'); // use the data-sort value
+            order = order === 'asc' ? 'desc' : 'asc'; // switch order
+            loadEnrolments();
         });
     });
 </script>
+
+
 </body>
 </html>
 
