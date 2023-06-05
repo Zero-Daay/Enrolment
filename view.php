@@ -9,6 +9,10 @@
 <body>
 <!-- Enrolment Table -->
 <h1>Student Enrolments</h1>
+<div id="search-container">
+    <input id="search-field" type="text" placeholder="Search...">
+    <button id="search-button">Search</button>
+</div>
 <table id="enrolments-table">
     <thead>
     <tr>
@@ -38,16 +42,21 @@
         var page = 1;
         var perPage = 20;
 
-        function loadEnrolments(){
+        function loadEnrolments(searchTerm){
+            var data = {
+                page: page,
+                perPage: perPage
+            };
+            if(searchTerm){
+                data.search = searchTerm;
+            }
             $.ajax({
                 url: 'index.php',
                 type: 'GET',
-                data: {
-                    page: page,
-                    perPage: perPage
-                },
+                data: data,
                 success: function(response){
                     // append response to your table
+                    $('#enrolments-table tbody').empty();
                     $('#enrolments-table tbody').append(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -63,7 +72,6 @@
         $('#prev-button').on('click', function(){
             if (page > 1) {
                 page--;
-                $('#enrolments-table tbody').empty(); // Clear the table body
                 loadEnrolments();
             }
         });
@@ -71,8 +79,14 @@
         // Next button click event
         $('#next-button').on('click', function(){
             page++;
-            $('#enrolments-table tbody').empty(); // Clear the table body
             loadEnrolments();
+        });
+
+        // Search button click event
+        $('#search-button').on('click', function(){
+            var searchTerm = $('#search-field').val();
+            page = 1; // reset to first page when search is performed
+            loadEnrolments(searchTerm);
         });
     });
 </script>

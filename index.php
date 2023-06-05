@@ -7,11 +7,13 @@ $db = new Database($config);
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = isset($_GET['perPage']) ? (int)$_GET['perPage'] : 20;
 
+$search = isset($_GET['search']) ? $_GET['search'] : null;
 try {
-    $enrolments = $db->getEnrolments($page, $perPage);
+    $enrolments = $db->getEnrolments($page, $perPage, $search);
 } catch (Exception $e) {
     die($db->friendlyError($e->getMessage()));
 }
+
 
 $output = '';
 foreach ($enrolments as $enrolment) {

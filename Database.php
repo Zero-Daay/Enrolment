@@ -27,25 +27,55 @@ class Database {
         return $stmt;
     }
 
-    public function getEnrolments($page, $perPage = 20) {
+    public function getEnrolments($page, $perPage = 20, $search = null) {
         $offset = ($page - 1) * $perPage;
-        $stmt = $this->query("
-        SELECT 
-            Enrolments.EnrolmentID,
-            Users.UserID, 
-            Users.FirstName, 
-            Users.Surname,
-            Courses.CourseID,
-            Courses.Description,
-            Enrolments.CompletionStatus
-        FROM 
-            Enrolments
-        JOIN 
-            Users ON Enrolments.UserID = Users.UserID
-        JOIN 
-            Courses ON Enrolments.CourseID  = Courses.CourseID
-        LIMIT {$perPage} OFFSET {$offset}
-    ");
+
+        if ($search) {
+            $search = "%{$search}%";
+            $stmt = $this->dbh->prepare("
+            SELECT 
+                Enrolments.EnrolmentID,
+                Users.UserID, 
+                Users.FirstName, 
+                Users.Surname,
+                Courses.CourseID,
+                Courses.Description,
+                Enrolments.CompletionStatus
+            FROM 
+                Enrolments
+            JOIN 
+                Users ON Enrolments.UserID = Users.UserID
+            JOIN 
+                Courses ON Enrolments.CourseID  = Courses.CourseID
+            WHERE 
+                Users.FirstName LIKE :search OR
+                Users.Surname LIKE :search OR
+                Enrolments.EnrolmentID LIKE :search OR
+                Users.UserID LIKE :search OR
+                Courses.CourseID LIKE :search
+            LIMIT {$perPage} OFFSET {$offset}
+        ");
+
+            $stmt->bindParam(':search', $search, PDO::PARAM_STR);
+        } else {
+            $stmt = $this->dbh->prepare("
+            SELECT 
+                Enrolments.EnrolmentID,
+                Users.UserID, 
+                Users.FirstName, 
+                Users.Surname,
+                Courses.CourseID,
+                Courses.Description,
+                Enrolments.CompletionStatus
+            FROM 
+                Enrolments
+            JOIN 
+                Users ON Enrolments.UserID = Users.UserID
+            JOIN 
+                Courses ON Enrolments.CourseID  = Courses.CourseID
+            LIMIT {$perPage} OFFSET {$offset}
+        ");
+        }
 
         if ($stmt->execute()) {
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -53,6 +83,7 @@ class Database {
             throw new Exception($stmt->errorInfo()[2]);
         }
     }
+
 
 
 
