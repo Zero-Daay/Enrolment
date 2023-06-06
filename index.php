@@ -1,7 +1,7 @@
 <?php
 
 // Include the Database connection class
-
+use App\Database\Database;
 
 require_once 'src/Database/Database.php';
 

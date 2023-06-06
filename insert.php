@@ -1,5 +1,6 @@
 <?php
 
+use App\Database\Database;
 
 require_once 'vendor/autoload.php'; // Path may vary based on your project structure
 require_once 'src/Database/Database.php';
