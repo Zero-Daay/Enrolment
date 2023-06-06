@@ -18,7 +18,7 @@ This project is a web application for managing and displaying student enrolment 
 ## Installation
 
 1. Clone the repository to your local machine or web server.
-2. Import the `Enrolments.SQL` file to your MySQL server. This file contains the necessary SQL commands to set up your database and tables. It can be imported using a tool like phpMyAdmin or via the command line.
+2. Import the `sql/enrolments.SQL` file to your MySQL server. This file contains the necessary SQL commands to set up your database and tables. It can be imported using a tool like phpMyAdmin or via the command line.
 3. Configure the `config.php` file to match your MySQL database settings.
 4. using current sql to create part data.
 4. Run your web server and access the project via your browser.
