@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 27, 2023 at 04:00 AM
+-- Generation Time: May 30, 2023 at 12:56 AM
 -- Server version: 8.0.33
 -- PHP Version: 8.2.6
 
@@ -20,6 +20,63 @@ SET time_zone = "+00:00";
 --
 -- Database: `enrolment`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Courses`
+--
+
+CREATE TABLE `Courses` (
+  `CourseID` int NOT NULL,
+  `Description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `Courses`
+--
+
+INSERT INTO `Courses` (`CourseID`, `Description`) VALUES
+(1, 'Introduction to Computer Science'),
+(2, 'Web Development Fundamentals'),
+(3, 'Data Analysis and Visualization'),
+(4, 'Machine Learning Basics'),
+(5, 'Database Management Systems'),
+(6, 'Software Engineering Principles'),
+(7, 'Artificial Intelligence Fundamentals'),
+(8, 'Mobile App Development'),
+(9, 'Cybersecurity Fundamentals'),
+(10, 'User Experience Design'),
+(11, 'Cloud Computing Essentials'),
+(12, 'Digital Marketing Strategies'),
+(13, 'Project Management Fundamentals'),
+(14, 'Network Administration Basics'),
+(15, 'Ethical Hacking and Penetration Testing'),
+(16, 'Game Development Principles'),
+(17, 'Internet of Things (IoT) Applications'),
+(18, 'Blockchain Technology Explained'),
+(19, 'Data Science and Big Data Analytics'),
+(20, 'Robotics and Automation Technologies'),
+(21, 'Introduction to Computer Science'),
+(22, 'Web Development Fundamentals'),
+(23, 'Data Analysis and Visualization'),
+(24, 'Machine Learning Basics'),
+(25, 'Database Management Systems'),
+(26, 'Software Engineering Principles'),
+(27, 'Artificial Intelligence Fundamentals'),
+(28, 'Mobile App Development'),
+(29, 'Cybersecurity Fundamentals'),
+(30, 'User Experience Design'),
+(31, 'Cloud Computing Essentials'),
+(32, 'Digital Marketing Strategies'),
+(33, 'Project Management Fundamentals'),
+(34, 'Network Administration Basics'),
+(35, 'Ethical Hacking and Penetration Testing'),
+(36, 'Game Development Principles'),
+(37, 'Internet of Things (IoT) Applications'),
+(38, 'Blockchain Technology Explained'),
+(39, 'Data Science and Big Data Analytics'),
+(40, 'Robotics and Automation Technologies');
 
 -- --------------------------------------------------------
 
@@ -240,9 +297,133 @@ INSERT INTO `Enrolments` (`EnrolmentID`, `UserID`, `CourseID`, `CompletionStatus
 (199, 34, 13, 'not started'),
 (200, 18, 3, 'not started');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Users`
+--
+
+CREATE TABLE `Users` (
+  `UserID` int NOT NULL,
+  `FirstName` varchar(50) NOT NULL,
+  `Surname` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`UserID`, `FirstName`, `Surname`) VALUES
+(1, 'Jane', 'Adams'),
+(2, 'John', 'Young'),
+(3, 'Amelia', 'Wilson'),
+(4, 'Christopher', 'Lewis'),
+(5, 'Harper', 'Lewis'),
+(6, 'Ava', 'Jones'),
+(7, 'Matthew', 'Johnson'),
+(8, 'Jane', 'Adams'),
+(9, 'Isabella', 'Harris'),
+(10, 'Joseph', 'White'),
+(11, 'Sarah', 'Scott'),
+(12, 'Evelyn', 'Allen'),
+(13, 'Charlotte', 'Wilson'),
+(14, 'Isabella', 'Hall'),
+(15, 'Ava', 'Smith'),
+(16, 'Sophia', 'Wilson'),
+(17, 'Sarah', 'King'),
+(18, 'Matthew', 'Jones'),
+(19, 'Mia', 'Smith'),
+(20, 'John', 'Green'),
+(21, 'Andrew', 'King'),
+(22, 'Matthew', 'Allen'),
+(23, 'Mia', 'Hill'),
+(24, 'Emily', 'Hill'),
+(25, 'Ethan', 'Green'),
+(26, 'Emma', 'Lewis'),
+(27, 'Ethan', 'Taylor'),
+(28, 'Sophia', 'Wright'),
+(29, 'James', 'Davis'),
+(30, 'Harper', 'Clark'),
+(31, 'Harper', 'Jones'),
+(32, 'Emily', 'Smith'),
+(33, 'Sarah', 'Davis'),
+(34, 'Isabella', 'Williams'),
+(35, 'James', 'Harris'),
+(36, 'John', 'Jones'),
+(37, 'Sophia', 'Baker'),
+(38, 'Amelia', 'Johnson'),
+(39, 'Sophia', 'White'),
+(40, 'Andrew', 'Williams'),
+(41, 'William', 'Scott'),
+(42, 'Olivia', 'Green'),
+(43, 'Christopher', 'Williams'),
+(44, 'Amelia', 'White'),
+(45, 'Christopher', 'Adams'),
+(46, 'Jane', 'Wright'),
+(47, 'David', 'Harris'),
+(48, 'Ethan', 'Miller'),
+(49, 'Benjamin', 'Turner'),
+(50, 'Alexander', 'Brown'),
+(51, 'Benjamin', 'Taylor'),
+(52, 'Benjamin', 'Brown'),
+(53, 'William', 'Hill'),
+(54, 'Evelyn', 'Miller'),
+(55, 'Mia', 'Allen'),
+(56, 'Isabella', 'Davis'),
+(57, 'John', 'Scott'),
+(58, 'Sarah', 'Walker'),
+(59, 'Olivia', 'Williams'),
+(60, 'Harper', 'Hill'),
+(61, 'Olivia', 'King'),
+(62, 'Andrew', 'Hill'),
+(63, 'Andrew', 'Jones'),
+(64, 'Alexander', 'Taylor'),
+(65, 'Olivia', 'Miller'),
+(66, 'Amelia', 'Hill'),
+(67, 'Daniel', 'White'),
+(68, 'Amelia', 'White'),
+(69, 'Ava', 'Walker'),
+(70, 'Charlotte', 'Williams'),
+(71, 'Ethan', 'Harris'),
+(72, 'William', 'Hill'),
+(73, 'Andrew', 'Wright'),
+(74, 'Emily', 'Scott'),
+(75, 'James', 'Allen'),
+(76, 'James', 'Allen'),
+(77, 'Evelyn', 'Scott'),
+(78, 'Sarah', 'Lewis'),
+(79, 'Emily', 'Williams'),
+(80, 'Ethan', 'Baker'),
+(81, 'Alexander', 'Davis'),
+(82, 'Joseph', 'Clark'),
+(83, 'Ethan', 'Jones'),
+(84, 'Mia', 'Hall'),
+(85, 'Christopher', 'Allen'),
+(86, 'Sarah', 'Lewis'),
+(87, 'James', 'Davis'),
+(88, 'Ava', 'White'),
+(89, 'Christopher', 'Baker'),
+(90, 'David', 'Scott'),
+(91, 'Olivia', 'Lewis'),
+(92, 'Ethan', 'King'),
+(93, 'Andrew', 'Green'),
+(94, 'Michael', 'Lewis'),
+(95, 'William', 'Walker'),
+(96, 'Emily', 'Miller'),
+(97, 'Benjamin', 'King'),
+(98, 'Sophia', 'Green'),
+(99, 'Michael', 'Johnson'),
+(100, 'Joseph', 'Lewis');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `Courses`
+--
+ALTER TABLE `Courses`
+  ADD PRIMARY KEY (`CourseID`);
 
 --
 -- Indexes for table `Enrolments`
@@ -253,14 +434,32 @@ ALTER TABLE `Enrolments`
   ADD KEY `CourseID` (`CourseID`);
 
 --
+-- Indexes for table `Users`
+--
+ALTER TABLE `Users`
+  ADD PRIMARY KEY (`UserID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `Courses`
+--
+ALTER TABLE `Courses`
+  MODIFY `CourseID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `Enrolments`
 --
 ALTER TABLE `Enrolments`
   MODIFY `EnrolmentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+
+--
+-- AUTO_INCREMENT for table `Users`
+--
+ALTER TABLE `Users`
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- Constraints for dumped tables

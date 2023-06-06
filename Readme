@@ -1,6 +1,6 @@
 # Student Enrolments Report
 
-This project is a web application for managing and displaying student enrolment records in a tabular format. 
+This project is a web application for managing and displaying student enrolment records in a tabular format.
 
 ## Features
 
@@ -20,22 +20,27 @@ This project is a web application for managing and displaying student enrolment 
 1. Clone the repository to your local machine or web server.
 2. Import the `Enrolments.SQL` file to your MySQL server. This file contains the necessary SQL commands to set up your database and tables. It can be imported using a tool like phpMyAdmin or via the command line.
 3. Configure the `config.php` file to match your MySQL database settings.
+4. using current sql to create part data.
 4. Run your web server and access the project via your browser.
-     Using:  php -S localhost:8899 reports.php
-Your page should as similar as Example.pnq file.
+     Using:  php -S localhost:8899
+5. open http://localhost:8899/view.html website
+Your page should as similar as Example.png and Example_1.png file.
+6. For insert more data, please use insert.php and download Faker
+     download: composer require fakerphp/faker
+     and then run insert.php by view:http://localhost:8899/insert.php
+
 
 ## Usage
 
-Open the web application in your browser. If there are student enrolments in the database, you will see them displayed in a table format. If there are any errors with the database connection or SQL query execution, they will be displayed on the page.
+Upon opening the application in your browser, you'll find the student enrolments (if any exist in the database) displayed in an interactive table format. In the event of any database connection or SQL query execution issues, these will be represented in an intuitive, user-friendly manner on the page itself.
 
-## Code Overview
+The list of enrolments can be sorted by clicking on column headers, and a search field is available to filter the list based on enrolment ID, user ID, first name, last name, course ID, and course name.
 
-- `index.php`: This file handles the main logic of the application. It retrieves the data from the database, handles errors, and displays the data in a DataTable.
-- `connection.php`: This file handles the connection to the MySQL database.
-- `config.php`: This file holds the configuration for the database connection.
-- `friendlyError()`: This function in `index.php` generates a user-friendly error message.
-- `Enrolments.SQL`: This file contains the SQL commands to set up the database and tables.
-- `generator.txt`:This file was used to generate the data;
+- `index.php`: Provide an API endpoint that can be called with parameters to retrieve enrolment data from a database and return it as JSON.
+- `src/Database/config.php`: This file holds the configuration for the database connection.
+- `src/DatabaseDatabase.php`:provides methods for connecting to a database, retrieving enrolment data with pagination and search capabilities, retrieving the total count of enrolments, and inserting new enrolments and users.
+- `sql/enrolments.SQL`: This file contains the SQL commands to set up the database and tables.
+- `src/Insert/insert.php`:This file was used to generate the extract data(large data);
 
 
 

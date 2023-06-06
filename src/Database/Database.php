@@ -1,14 +1,22 @@
 <?php
 
-class Database {
-    private $dbh;
-    private $config;
 
+namespace App\Database;
+
+use PDO;
+use PDOException;
+
+class Database {
+    private $dbh;   // Database handler
+    private $config; // Database configuration
+
+    // Constructor of the Database class
     public function __construct(array $config) {
         $this->config = $config;
         $this->connect();
     }
 
+    // Method to connect to the database using PDO (PHP Data Objects)
     private function connect() {
         $db = $this->config['db'];
         $dsn = "mysql:host={$db['host']};port={$db['port']};dbname={$db['name']}";
@@ -22,6 +30,7 @@ class Database {
     /**
      * @throws Exception
      */
+    // Method to fetch enrollments from the database
     public function getEnrolments($page, $perPage = 20, $search = null, $sort = 'EnrolmentID', $order = 'asc') {
         $offset = ($page - 1) * $perPage;
 
@@ -95,6 +104,7 @@ class Database {
     /**
      * @throws Exception
      */
+    // Method to calculate the total number of enrollments
     public function getTotalEnrolments($search = null) {
         // Whitelist possible column names to avoid SQL Injection
 
@@ -138,12 +148,14 @@ class Database {
             throw new Exception($stmt->errorInfo()[2]);
         }
     }
+
+    // Method to insert a user record into the database
     public function insertUser($userID, $firstName, $surname) {
         $stmt = $this->dbh->prepare("INSERT INTO Users (UserID, FirstName, Surname) VALUES (?, ?, ?)");
         $stmt->execute([$userID, $firstName, $surname]);
     }
 
-
+    // Method to format and display errors
     public function friendlyError(string $e, string $level = 'Error'): string {
         $date = date("Y-m-d H:i:s");
         return <<<END
@@ -156,6 +168,7 @@ class Database {
         END;
     }
 
+    // Method to insert an enrollment record into the database
     public function insertEnrolment($userID, $courseID, $completionStatus) {
         $stmt = $this->dbh->prepare("INSERT INTO Enrolments (UserID, CourseID, CompletionStatus) VALUES (?, ?, ?)");
         $stmt->execute([$userID, $courseID, $completionStatus]);

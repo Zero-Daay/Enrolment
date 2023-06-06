@@ -1,4 +1,5 @@
 <?php
+namespace App\Database;
 
 // config.php
 
